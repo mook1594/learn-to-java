@@ -5,9 +5,10 @@ import refactoring.chapter1.mock.PlaysMock;
 import refactoring.chapter1.model.Invoice;
 import refactoring.chapter1.model.Performance;
 import refactoring.chapter1.model.Play;
+
 import java.util.Map;
 
-public class Ex1 {
+public class Ex1_1 {
     public static void main(String[] args){
         InvoicesMock invoices = new InvoicesMock();
         PlaysMock plays = new PlaysMock();
@@ -23,25 +24,8 @@ public class Ex1 {
 
         for(Performance perf : invoice.getPerformances()){
             Play play = plays.get(perf.getPlayID());
-            int thisAmount = 0;
 
-            switch (play.getType()) {
-                case "tragedy": // 비극
-                    thisAmount = 40000;
-                    if (perf.getAudience() > 30) {
-                        thisAmount += 1000 * (perf.getAudience() - 30);
-                    }
-                    break;
-                case "comedy": // 희극
-                    thisAmount = 30000;
-                    if (perf.getAudience() > 20) {
-                        thisAmount += 10000 + 500 * (perf.getAudience() - 20);
-                    }
-                    thisAmount += 300 * perf.getAudience();
-                    break;
-                default:
-                    throw new RuntimeException("알 수 없는 장르: " + play.getType());
-            }
+            int thisAmount = amountFor(perf, play);
 
             // 포인트를 적립한다.
             volumeCredits += Math.max(perf.getAudience() - 30, 0);
@@ -57,6 +41,30 @@ public class Ex1 {
         }
         result += "총액: $" + totalAmount / 100 + "\n";
         result += "적립 포인트: " + volumeCredits + "점\n";
+
+        return result;
+    }
+
+    private static int amountFor(Performance performance, Play play){
+        int result = 0;
+
+        switch (play.getType()) {
+            case "tragedy": // 비극
+                result = 40000;
+                if (performance.getAudience() > 30) {
+                    result += 1000 * (performance.getAudience() - 30);
+                }
+                break;
+            case "comedy": // 희극
+                result = 30000;
+                if (performance.getAudience() > 20) {
+                    result += 10000 + 500 * (performance.getAudience() - 20);
+                }
+                result += 300 * performance.getAudience();
+                break;
+            default:
+                throw new RuntimeException("알 수 없는 장르: " + play.getType());
+        }
 
         return result;
     }
