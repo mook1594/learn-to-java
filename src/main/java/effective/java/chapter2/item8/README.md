@@ -1,3 +1,5 @@
+#####[GO TO LIST](../README.md)
+
 # 아이템 8. finalizer와 cleaner 사용을 피하라 
 
 ### finalizer와 cleaner의 단점

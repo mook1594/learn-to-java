@@ -1,3 +1,5 @@
+#####[GO TO LIST](../README.md)
+
 # 1장. 들어가며
 ## Java 타입 구성
 ### 기본타입 (Primitive)
