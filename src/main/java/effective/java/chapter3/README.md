@@ -7,3 +7,4 @@
 > HashMap, HashSet이 오동작 하는것을 방지해줌.
 
 ####[아이템10. equals는 일반 규약을 지켜 재정의하라](./item10/README.md)
+####[아이템11. equals를 재정의 할때 hashCode도 재정의 하라](./item11/README.md)
