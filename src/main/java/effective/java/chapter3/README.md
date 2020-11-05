@@ -10,3 +10,4 @@
 #### [아이템11. equals를 재정의 할때 hashCode도 재정의 하라](./item11/README.md)
 #### [아이템12. toString을 항상 재정의하라](./item12/README.md)
 #### [아이템13. clone 재정의는 주의해서 진행하라](./item13/README.md)
+#### [아이템14. Comparable을 구현할지 고려하라](./item14/README.md)
