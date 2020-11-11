@@ -1,4 +1,4 @@
-##### [GO TO LIST](../../../junit/README.md)
+##### [GO TO LIST](../README.md)
 
 # Chapter3. 모든 객체의 공통 메서드
 

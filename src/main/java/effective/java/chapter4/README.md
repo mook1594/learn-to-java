@@ -1,4 +1,4 @@
-##### [GO TO LIST](../../../junit/README.md)
+##### [GO TO LIST](../README.md)
 
 # Chapter4. 클래스와 인터페이스
 > 추상화의 기본 단위인 클래스와 인터페이스  
