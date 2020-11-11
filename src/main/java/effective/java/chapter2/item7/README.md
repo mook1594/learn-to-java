@@ -1,4 +1,4 @@
-#####[GO TO LIST](../README.md)
+##### [GO TO LIST](../README.md)
 
 # 아이템7. 다 쓴 객체 참조를 해제하라
 

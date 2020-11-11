@@ -1,4 +1,4 @@
-#####[GO TO LIST](../README.md)
+##### [GO TO LIST](../README.md)
 
 # 아이템18. 상속보다는 컴포지션을 사용하라
 

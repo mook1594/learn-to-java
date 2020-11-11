@@ -1,4 +1,4 @@
-#####[GO TO LIST](../README.md)
+##### [GO TO LIST](../README.md)
 
 # 2장. 객체 생성과 파괴
 > 객체의 생성과 파괴  

@@ -1,4 +1,4 @@
-#####[GO TO LIST](../README.md)
+##### [GO TO LIST](../README.md)
 
 # 아이템6. 불필요한 객체 생성을 피하라
 

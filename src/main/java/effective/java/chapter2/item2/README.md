@@ -1,4 +1,4 @@
-#####[GO TO LIST](../README.md)
+##### [GO TO LIST](../README.md)
 
 # 아이템2. 생성자에 매개변수가 많다면 빌더를 고려하라
 
