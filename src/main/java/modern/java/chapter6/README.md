@@ -64,3 +64,9 @@ Optional<Dish> mostCalorieDish = menu.stream()
     .collect(reducing(
         (d1, d2) -> d1.getCalories > d2.getCalories() ? d1 : d2))
 ```
+
+### 6.3 그룹화
+```java
+Map<Dish.Type, List<Dish>> dishesByType = 
+    menu.stream().collect(groupingBy(Dish::getType));
+```
