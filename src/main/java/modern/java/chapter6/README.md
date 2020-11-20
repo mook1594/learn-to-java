@@ -70,3 +70,131 @@ Optional<Dish> mostCalorieDish = menu.stream()
 Map<Dish.Type, List<Dish>> dishesByType = 
     menu.stream().collect(groupingBy(Dish::getType));
 ```
+
+```java
+Map<CaloricLevel, List<Dish>> dishesByCaloricLevel = menu.stream().collect(
+    groupingBy(dish -> {
+        if(dish.getCalories() <= 400) return CaloricLevel.DIET;
+        else if(dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+        else return CaloricLevel.FAT;
+    })
+);
+```
+
+- 맵 필터링
+```java
+Map<Dish.Type, List<Dish>> caloricDishesByType = 
+    menu.stream()
+        .collect(groupingBy(Dish::getType,
+            .filtering(dish -> dish.getCalories() > 500, toList())));
+```
+
+- grouping에 flatMapping 활용
+```java
+Map<Dish.Type, Set<String>> dishNamesByType = 
+    menu.stream()
+        .collect(groupingBy(Dish::getType,
+            flatMapping(dish -> dishTags.get(dish.getName()).stream(), toSet())));          
+```
+
+- 다수준 그룹화
+```java
+Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = 
+    menu.stream().collect(
+        groupingBy(Dish::getType,
+            groupingBy(dish -> {
+                if(dish.getCalories()) <= 400)
+                    return CaloricLevel.DIET;
+                else if(dish.getCalories() <= 700)
+                    return CaloricLevel.NORMAL;
+                else return CalroicLevel.FAT;
+            })
+        )
+    )
+```
+
+- 가장 높은것 그룹
+```java
+Map<Dish.Type, Optional<Dish>> mostCaloricByType = 
+    menu.stream()
+        .collect(groupingBy(Dish::getType,
+                        maxBy(comparingInt(Dish::getCalories))));          
+```
+
+- 서브 그룹에서 가장 높은 것
+```java
+Map<Dish.Type, Dish> mostCaloricByType = 
+    menu.stream()
+        .collect(groupingBy(Dish::getType,
+                collectingAndThen(
+                    maxBy(comparingInt(Dish::getCalories)),
+            Optional::get
+        )))          
+```
+
+- partitionBy
+```java
+Map<Boolean, Dish> mostCaloricPartitionedByVegetarian = 
+    menu.stream().collect(
+        partitioningBy(Dish::isVegetarian,
+            collectingAndThen(maxBycomparingInt(Dish::getCalories(), Optional::get)))       
+        )   
+```
+
+#### Collectors 클래스의 정적 팩터리 메서드
+- toList: 스트림의 모든 항목을 리스트로 수집  
+```java
+List<Dish> dishes = menuStream.collect(toList());
+```
+- toSet: 스트림의 모든 항목을 중복 없는 집합으로 수집
+```java
+Set<Dish> dishes = menuStream.collect(toSet());
+```
+- toCollection: 스트림의 모든 항목을 컬렉션으로 수집
+```java
+Collection<Dish> dishes = menuStream.collect(toCollection(), ArrayList::new);
+```
+- counting: 스트림 항목 수 계산
+```java
+long howManyDishes = menuStream.collect(counting());
+```
+- summingInt: 스트림 항목 정수 합계 계산
+```java
+int totalCalories = menuStream.collect(summingInt(Dish::getCalories));
+```
+- averagingInt: 스트림 항목 평균값 계산
+```java
+double avgCalories = menuStream.collect(averagingInt(Dish::getCalories));
+```
+- summarizingInt: 스트림 항목 최대,최소,합계, 평균등 통계 수집
+```java
+IntSummaryStatistics menuStatistics = menuStream.collect(summarizingInt(Dish::getCalories));
+```
+- joining: toString 호출한 문자열 연결
+```java
+String shortMenu = menuStream.map(Dish::getName).collect(joining(", "))
+```
+- maxBy: 스트림 최대값 요소를 반환
+```java
+Optional<Dish> fattest = menuStream.collect(maxBy(comparingInt(Dish::getCalories)));
+```   
+- minBy: 스트림 최소값 요소를 반환
+```java
+Optional<Dish> lighttest = menuStream.collect(minBy(comparingInt(Dish::getCalories)));
+```
+- reducing: 초기값으로 부터 각 요소를 반복하면서 행위를 처리하고 하나의 값으로 리듀싱
+```java
+int totalCalories = menuStream.collect(reducing(0, Dish::getCalories, Integer::sum));
+```
+- collectingAndThen: 다른 컬렉터를 감싸고 결과에 반환함수 적용
+```java
+int howManyDishes = menuStream.collect(collectingAndThen(toList(), List::size));
+```
+- groupingBy: 하나의 값을 기준으로 항목을 그룹하여 맵화 시킴
+```java
+Map<Dish.Type, List<Dish>> dishesByType = menuStream.collect(groupingBy(Dish::getType));
+```
+- partitioningBy: 프리디케이트를 스트림의 각 항목에 적용한 결과로 항목 분할
+```java
+Map<Boolean, List<Dish>> vegetarianDishes = menuStream.collect(partitioningBy(Dish::isVegetarian));
+```
