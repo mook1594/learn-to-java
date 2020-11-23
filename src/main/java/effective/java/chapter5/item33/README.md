@@ -38,3 +38,45 @@ public class Favorites {
     }
 }  
 ```
+
+### 알아두어야할 두 제약
+- 첫번째: 악의적인 클라이언트가 Class 객체를 로타입으로 넘기면 안전성이 깨짐
+- 불편을 보장하려면 다음과 같이
+```java
+public <T> void putFavorite(Class<T> type, T instance) {
+    favorites.put(Objects.requireNonNull(type), type.cast(instance));
+}
+```
+
+- 두번째: 실체화 불가 타입에는 사용 불가
+- List<String> 불가 (Class 객체를 얻을 수 없다.)
+- 슈퍼 타입 토큰으로 해결 시도 가능 (Spring의 ParameterizedTypeReference)
+```java
+Favorites f = new Favorites();
+List<String> pets = Arrays.asList("개", "고양이", "앵무");
+f.putFavorite(new TypeRef<List<String>>(){}, pets);
+List<String> listOfStrings = f.getFavorite(new TypeRef<List<String>>(){});
+```
+- 이 방식에 대한 설명 [링크](http://bit.ly/2NGQi2S)
+- 이 방식의 한계 [링크](http://bit.ly/2OfIrdG)
+
+### 한정적 타입 토큰
+- 애너테이션 API는 한정적 타입 토큰을 적극 활용한다 [아이템39](../item39/README.md)
+```java
+public <T extends Annotation> T getAnnotation(Class<T> annotationType);
+```
+
+- asSubclass를 사용해 한정적 타입 토큰을 안전하게 형변환 한다.
+```java
+static Annotation getAnnotation(AnnotatedElement element, String annotationTypeName) {
+    Class<?> annotationType = null;
+    try{
+        annotationType = Class.forName(annotationTypeName);
+    } catch (Exception ex) {
+        throw new IllegalArgumentException(ex);
+    }
+    return element.getAnnotation(
+        annotationType.asSubclass(Annotation.class)
+    );
+}
+```
