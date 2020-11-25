@@ -5,3 +5,4 @@
 > 인터페이스의 일종인 애너테이션 (annotation)
 
 #### [아이템34. int 상수 대신 열거 타입을 사용하라](./item34/README.md)
+#### [아이템35. ordinal 메서드 대신 인스턴스 필드를 사용하라](./item35/README.md)
