@@ -10,3 +10,4 @@
 #### [아이템37. ordinal 인덱싱 대신 EnumMap을 사용하라](./item37/README.md)
 #### [아이템38. 확장할 수 있는 열거 타입이 필요하면 인터페이스를 사용하라](./item38/README.md)
 #### [아이템39. 명명패턴보다 애너테이션을 사용하라](./item39/README.md)
+#### [아이템40. @Override 애너테이션을 일관되게 사용하라](./item40/README>md)
