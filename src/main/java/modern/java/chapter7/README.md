@@ -179,3 +179,13 @@ public static long forkJoinSum(long n) {
     return new ForkJoinPool().invoke(task);
 }
 ```
+
+#### 포크/조인 프레임워크를 제대로 사용하는 방법
+- join 메서드를 태스크에 호출하면 태스크가 생산하는 결과가 준비될 때까지 호출자를 블록시킨다. 두 서브태스크가 모두 시작된 다음 join을 호출해야한다.
+- RecursiveTask 내에서는 ForkJoinPool의 invoke 메서드를 사용하지 말아야 한다. 순차 코드에서 병렬 계산을 시작할 때만 invoke를 사용한다.
+- 서브테스크에 fork 메서드를 호출해서 ForkJoinPool의 일정을 조절할 수 있다. 둘다 fork를 호출하는 것 보다 한쪽을 fork 한쪽은 compute를 호출하는 것이 효율적이다.
+- 포크/조인 프레임워크를 이용하는 병렬 계산은 디버깅하기 어렵다. stack trace로 확인하지만 fork, compute 는 도움되지 않는다.
+- 멀티코어 포크/조인 프레임워크를 사용하는 것은 순차처리보다 무조건 빠를거라는 생각은 버려야한다.
+
+#### 작업 훔치기
+추후 더 확인
