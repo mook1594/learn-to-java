@@ -10,3 +10,4 @@
 ### [챕터6. 스트림으로 데이터 수집](./chapter6/README.md) 
 ### [챕터7. 병렬 데이터 처리와 성능](./chapter7/README.md)
 ### [챕터8. 컬렉션 API 개선](./chapter8/README.md)
+### [챕터9. 리팩터링, 테스팅, 디버깅](./chapter9/README.md)
