@@ -49,4 +49,72 @@ Optional<Person> name =
             .orElse("Unknown");
 ```
 #### Optional 스트림 조작
+```java
+public Set<String> getCarInsuranceNames(List<Person> persons) {
+    return persons.stream()
+        .map(Person::getCar)
+        .map(optCar -> optCar.flatMap(Car::getInsurance))
+        .map(optIns -> optIns.map(Insurance::getName))
+        .flatMap(Optional::stream)
+        .collect(toSet());
+}
+```
+#### 디폴트 액션과 Optional 언랩
+- get(): 기본값, 안전하지 않음, NoSuchElementException 에러
+- orElse(): 기본값
+- orElseGet(): 값이 없을때만 로드
+- orElseThrow: 예외 발생
+- ifPresent: 동작ㅇㄹ 실행, 갑이없으면 실행하지 않음
+- ifPresentOrElse
 
+#### 두 Option 합치
+```java
+public Optional<Insurance> nullSafeFindCheapestInsurance(Optional<Person> person, Optional<Car> car) {
+    if(person.isPresent() && car.isPresent()) {
+        return Optional.of(findCheapestInsurance(person.get(), car.get()));
+    }
+    return Optional.empty();
+}
+```
+```java
+public Optional<Insurance> nullSafeFindCheapsetInsurance(Optional<Person> person, Optional<Car> car) {
+    return person.flatMap(p -> car.map(c -> findCheapestInsurance(p, c)));
+}
+```
+
+#### 필터로 특정값 거르기
+```java
+public String getCarInsuranceName(Optional<Person> person, int minAge) {
+    return person.filter(p -> p.getAge() >= minAge)
+                .flatMap(Person::getCar)
+                .flatMap(Car::getInsurance)
+                .map(Insurance::getname)
+                .orElse("Unknown");
+}
+```
+- filter: 일치하면 반환, 없으면 빈배열
+- flatMap: 값이 존재하면 함수 결과 반환, 없으면 빈 옵션
+
+### 11.4 Optional을 사용한 실용 에제
+```java
+public int readDuration(Properties props, String name) {
+    String value = props.getProperty(name);
+    if(value != null) {
+        try {
+            int i = Integer.parseInt(value);
+            if(i > 0) {
+                return i;
+            }
+        } catch(NumberFormatException nfe) { }
+    }
+    return 0;
+}
+```
+```java
+public int readDuration(Properties props, String name) {
+    return Optional.ofNullable(props.getProperty(name))
+        .flatMap(OptionalUtility::stringToInt)
+        .filter(i -> i > 0)
+        .orElse(0)
+}
+```
