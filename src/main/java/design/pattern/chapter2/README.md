@@ -43,6 +43,6 @@
 - [추상 팩토리 패턴](../chapter4/README.md)
 - [빌더 패턴](../chatper5/README.md)
 - [파사드 패턴](../chapter11/README.md)
-- 프로토타입 패턴
+- [프로토타입 패턴](../chapter6/README.md)
 
 
